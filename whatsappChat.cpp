@@ -167,7 +167,7 @@ int main() {
         root = insert(root, conversation);
     }
 
-    // Display all the conversations
+    // Displaying all the conversations
     cout <<endl<<"WHATSAPP CONVERSATIONS:" << endl;
     displayChats(root);
 
