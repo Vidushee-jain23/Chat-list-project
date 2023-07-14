@@ -1,178 +1,183 @@
 #include <iostream>
 #include <string>
-#include <vector>
-#include <unordered_set>
+#include <list>
+#include <iomanip>
+#include <ctime>
 using namespace std;
 
-
 class Chat {
+private:
+    std::string senderName;
+    std::string receiverName;
+    std::string message;
+    std::time_t timestamp;
+    bool read;
+
 public:
-    string senderName;
-    string receiverName;
-    string message;
+    Chat(const std::string& sender, const std::string& receiver, const std::string& msg)
+        : senderName(sender), receiverName(receiver), message(msg), timestamp(std::time(nullptr)), read(false) {}
+
+    const std::string& getSenderName() const {
+        return senderName;
+    }
+
+    const std::string& getReceiverName() const {
+        return receiverName;
+    }
+
+    const std::string& getMessage() const {
+        return message;
+    }
+
+    std::time_t getTimestamp() const {
+        return timestamp;
+    }
+
+    bool isRead() const {
+        return read;
+    }
+
+    void markAsRead() {
+        read = true;
+    }
 };
 
-class Node {
+class WhatsAppChatList {
+private:
+    std::list<Chat> chats;
+
 public:
-    Chat chat;
-    int height;
-    Node* left;
-    Node* right;
+    void addChat(const Chat& chat) {
+        chats.push_back(chat);
+    }
 
-    Node(const Chat& chat) : chat(chat), height(1), left(nullptr), right(nullptr) {}
+    void displayChats() {
+        std::cout <<endl<< "WHATSAPP CONVERSATIONS:" << std::endl;
+        int index = 1;
+        for (auto& chat : chats) {
+            std::cout << "Index: " << index << std::endl;
+            std::cout << "Sender: " << chat.getSenderName() << ", Receiver: " << chat.getReceiverName() << std::endl;
+            std::cout << "Message: " << chat.getMessage() << std::endl;
+
+            std::time_t timestamp = chat.getTimestamp();
+            std::tm* timestampStruct = std::localtime(&timestamp);
+            char buffer[80];
+            std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timestampStruct);
+
+            std::cout << "Timestamp: " << buffer << std::endl;
+            std::cout << "Read: " << (chat.isRead() ? "Yes" : "No") << std::endl;
+            std::cout << std::endl;
+
+            index++;
+        }
+    }
+
+    void markChatAsRead(int index) {
+        if (index >= 1 && index <= chats.size()) {
+            auto it = std::next(chats.begin(), index - 1);
+            it->markAsRead();
+            std::cout << "Chat marked as read." << std::endl;
+        }
+        else {
+            std::cout << "Invalid chat index." << std::endl;
+        }
+    }
+
+    void searchChatsBySenderReceiver(const std::string& name) {
+        std::cout << "Search results for '" << name << "':" << std::endl;
+        int index = 1;
+        bool found = false;
+        for (auto& chat : chats) {
+            if (chat.getSenderName() == name || chat.getReceiverName() == name) {
+                std::cout << "Index: " << index << std::endl;
+                std::cout << "Sender: " << chat.getSenderName() << ", Receiver: " << chat.getReceiverName() << std::endl;
+                std::cout << "Message: " << chat.getMessage() << std::endl;
+                std::cout << std::endl;
+                found = true;
+            }
+            index++;
+        }
+        if (!found) {
+            std::cout << "No chats found with '" << name << "'." << std::endl;
+        }
+    }
+
+    void deleteChat(int index) {
+        if (index >= 1 && index <= chats.size()) {
+            auto it = std::next(chats.begin(), index - 1);
+            chats.erase(it);
+            std::cout << "Chat deleted." << std::endl;
+        }
+        else {
+            std::cout << "Invalid chat index." << std::endl;
+        }
+    }
 };
-
-// Function to get the height of a node
-int getHeight(Node* node) {
-    if (node == nullptr)
-        return 0;
-    return node->height;
-}
-
-// Function to update the height of a node
-void updateHeight(Node* node) {
-    node->height = 1 + max(getHeight(node->left), getHeight(node->right));
-}
-
-// Function to perform a right rotation
-Node* rotateRight(Node* node) {
-    Node* newRoot = node->left;
-    node->left = newRoot->right;
-    newRoot->right = node;
-    updateHeight(node);
-    updateHeight(newRoot);
-    return newRoot;
-}
-
-// Function to perform a left rotation
-Node* rotateLeft(Node* node) {
-    Node* newRoot = node->right;
-    node->right = newRoot->left;
-    newRoot->left = node;
-    updateHeight(node);
-    updateHeight(newRoot);
-    return newRoot;
-}
-
-// Function to balance the AVL tree
-Node* balance(Node* node) {
-    if (getHeight(node->left) - getHeight(node->right) > 1) {
-        if (getHeight(node->left->left) >= getHeight(node->left->right))
-            node = rotateRight(node);
-        else {
-            node->left = rotateLeft(node->left);
-            node = rotateRight(node);
-        }
-    }
-    else if (getHeight(node->right) - getHeight(node->left) > 1) {
-        if (getHeight(node->right->right) >= getHeight(node->right->left))
-            node = rotateLeft(node);
-        else {
-            node->right = rotateRight(node->right);
-            node = rotateLeft(node);
-        }
-    }
-    return node;
-}
-
-// Function to insert a chat into the AVL tree
-Node* insert(Node* node, const Chat& chat) {
-    if (node == nullptr) {
-        Node* newNode = new Node(chat);
-        return newNode;
-    }
-
-    if (chat.senderName < node->chat.senderName)
-        node->left = insert(node->left, chat);
-    else
-        node->right = insert(node->right, chat);
-
-    updateHeight(node);
-    node = balance(node);
-    return node;
-}
-
-// Function to display the chats in the AVL tree (in-order traversal)
-void displayChats(Node* node) {
-    if (node == nullptr)
-        return;
-
-    displayChats(node->left);
-    cout << "Sender: " << node->chat.senderName << ", Receiver: " << node->chat.receiverName
-              <<endl<<"Message: " << node->chat.message << endl;
-    displayChats(node->right);
-}
-
-// Function to free the memory allocated for the AVL tree
-void destroyTree(Node* node) {
-    if (node == nullptr)
-        return;
-
-    destroyTree(node->left);
-    destroyTree(node->right);
-    delete node;
-}
 
 int main() {
-    unordered_set<string> contacts;
-    vector<Chat> chats;
-    Node* root = nullptr;
+    WhatsAppChatList chatList;
 
-    // Collect user's contacts
-    cout << "Enter the names of the persons in your contact list (press Enter to finish):" << endl;
     while (true) {
-        string contact;
-        getline(cin, contact);
-        if (contact == "stop")
-            break;
-        contacts.insert(contact);
-    }
+        std::cout << "1. Add Chat" << std::endl;
+        std::cout << "2. Display Chats" << std::endl;
+        std::cout << "3. Mark Chat as Read" << std::endl;
+        std::cout << "4. Search Chats by Sender/Receiver Name" << std::endl;
+        std::cout << "5. Delete Chat" << std::endl;
+        std::cout << "6. Exit" << std::endl;
+        std::cout << "Enter your choice: ";
+        int choice;
+        std::cin >> choice;
+        std::cin.ignore(10000, '\n');
 
-    // Display WhatsApp heading and contact names
-    cout <<endl<< "WHATSAPP" << endl;
-    for (const string& contact : contacts) {
-        cout << contact << endl;
-    }
+        if (choice == 1) {
+            std::string senderName;
+            std::cout << "Enter the name of the sender: ";
+            std::getline(std::cin, senderName);
 
-    // Chat loop
-    while (true) {
-        string senderName;
-        cout <<endl<<"Enter the name of the sender (press stop to finish):" << endl;
-        getline(cin, senderName);
-        if (senderName == "stop")
+            std::string receiverName;
+            std::cout << "Enter the name of the receiver: ";
+            std::getline(std::cin, receiverName);
+
+            std::string message;
+            std::cout << "Enter the message: ";
+            std::getline(std::cin, message);
+
+            Chat chat(senderName, receiverName, message);
+            chatList.addChat(chat);
+        }
+        else if (choice == 2) {
+            chatList.displayChats();
+        }
+        else if (choice == 3) {
+            std::cout << "Enter the chat index to mark as read: ";
+            int index;
+            std::cin >> index;
+            std::cin.ignore(10000, '\n');
+            chatList.markChatAsRead(index);
+        }
+        else if (choice == 4) {
+            std::string name;
+            std::cout << "Enter the sender/receiver name to search: ";
+            std::getline(std::cin, name);
+            chatList.searchChatsBySenderReceiver(name);
+        }
+        else if (choice == 5) {
+            std::cout << "Enter the chat index to delete: ";
+            int index;
+            std::cin >> index;
+            std::cin.ignore(10000, '\n');
+            chatList.deleteChat(index);
+        }
+        else if (choice == 6) {
             break;
-        if (contacts.find(senderName) == contacts.end()) {
-            cout << "Invalid sender name. Please try again." << endl;
-            continue;
+        }
+        else {
+            std::cout << "Invalid choice. Please try again." << std::endl;
         }
 
-        string receiverName;
-        cout <<endl<<"Enter the name of the receiver:" << endl;
-        getline(cin, receiverName);
-        if (contacts.find(receiverName) == contacts.end()) {
-            cout << "Invalid receiver name. Please try again." << endl;
-            continue;
-        }
-
-        string message;
-        cout <<endl<< "Enter the message:" << endl;
-        getline(cin, message);
-
-        // Update the chat listChat chat;
-        Chat conversation;
-        conversation.senderName = senderName;
-        conversation.receiverName = receiverName;
-        conversation.message = message;
-        chats.push_back(conversation);
-        root = insert(root, conversation);
+        std::cout << std::endl;
     }
-
-    // Displaying all the conversations
-    cout <<endl<<"WHATSAPP CONVERSATIONS:" << endl;
-    displayChats(root);
-
-    // Clean up the tree
-    destroyTree(root);
 
     return 0;
 }
+
