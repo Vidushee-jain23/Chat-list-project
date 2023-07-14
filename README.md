@@ -1,4 +1,4 @@
-# Whatsapp-chat-project
+# Chat-list-project
 This project is a simple implementation of a WhatsApp-like chat application using object-oriented programming concepts in C++. It allows users to perform various operations on their chat conversations. Here's a brief description of the features and functionality:
 
 1. Add Chat: Users can add new chat conversations by providing the sender name, receiver name, and message content.
