@@ -13,4 +13,4 @@ This project is a simple implementation of a WhatsApp-like chat application usin
 
 6. Exit: Allows the user to exit the application.
 
-The program utilizes classes and objects to represent chats and the chat list.
+The program utilizes classes and objects to represent chats and the chat list. 
