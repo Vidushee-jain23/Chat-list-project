@@ -7,7 +7,7 @@ using namespace std;
 
 class Chat {
 private:
-    string senderName;
+    std::string senderName;
     string receiverName;
     string message;
     time_t timestamp;
