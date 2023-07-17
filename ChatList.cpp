@@ -10,7 +10,7 @@ private:
     std::string senderName;
     std::string receiverName;
     std::string message;
-    time_t timestamp;
+    std::time_t timestamp;
     bool read;
 
 public:
