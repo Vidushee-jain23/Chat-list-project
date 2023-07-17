@@ -8,7 +8,7 @@ using namespace std;
 class Chat {
 private:
     std::string senderName;
-    string receiverName;
+    std::string receiverName;
     string message;
     time_t timestamp;
     bool read;
