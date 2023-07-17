@@ -7,10 +7,10 @@ using namespace std;
 
 class Chat {
 private:
-    std::string senderName;
-    std::string receiverName;
-    std::string message;
-    std::time_t timestamp;
+    string senderName;
+    string receiverName;
+    string message;
+    time_t timestamp;
     bool read;
 
 public:
