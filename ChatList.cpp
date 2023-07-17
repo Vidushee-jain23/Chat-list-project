@@ -9,7 +9,7 @@ class Chat {
 private:
     std::string senderName;
     std::string receiverName;
-    string message;
+    std::string message;
     time_t timestamp;
     bool read;
 
