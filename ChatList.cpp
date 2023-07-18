@@ -52,7 +52,7 @@ public:
     }
 
     void displayChats() {
-        std::cout <<endl<< "WHATSAPP CONVERSATIONS:" << std::endl;
+        std::cout <<endl<<"WHATSAPP CONVERSATIONS:" << std::endl;
         int index = 1;
         for (auto& chat : chats) {
             std::cout << "Index: " << index << std::endl;
