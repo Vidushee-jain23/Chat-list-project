@@ -3,8 +3,7 @@
 
 ## **Objective:**<br>  
 This project is a simple implementation of a WhatsApp-like chat application using object-oriented programming concepts in C++. It allows users to perform various operations on their chat conversations.  
-<br><br>
-
+<br>
 
 ## **Description:**<br>
 * **Add Chat:**<br>
