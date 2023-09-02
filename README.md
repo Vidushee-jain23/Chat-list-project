@@ -7,19 +7,19 @@ This project is a simple implementation of a WhatsApp-like chat application usin
 
 ## **Description:**<br>
 * **Add Chat:**<br>
-Users can add new chat conversations by providing the sender name, receiver name, and message content. <br><br>
+Users can add new chat conversations by providing the sender name, receiver name, and message content. <br>
 
 * **Display Chat:**<br>
-All existing chat conversations are displayed, showing the sender, receiver, message, timestamp, and read status of each chat. <br><br>
+All existing chat conversations are displayed, showing the sender, receiver, message, timestamp, and read status of each chat. <br>
 
 * **Mark Chat As Read:**<br>
-Users can mark a specific chat as read by providing the chat index. <br><br>
+Users can mark a specific chat as read by providing the chat index. <br>
 
 * **Search Chats by Sender/Receiver Name:**<br>
-Users can search for chats based on the sender or receiver name. The search results display the relevant chat conversations. <br><br>
+Users can search for chats based on the sender or receiver name. The search results display the relevant chat conversations. <br>
  
 * **Delete Chat:**<br>
-Users can delete a specific chat by providing the chat index.<br><br>
+Users can delete a specific chat by providing the chat index.<br>
 
 * **Exit:**<br>
 Allows the user to exit the application. <br><br>
