@@ -1,16 +1,35 @@
 # Chat-list-project
-This project is a simple implementation of a WhatsApp-like chat application using object-oriented programming concepts in C++. It allows users to perform various operations on their chat conversations. Here's a brief description of the features and functionality:
 
-1. Add Chat: Users can add new chat conversations by providing the sender name, receiver name, and message content.
 
-2. Display Chats: All existing chat conversations are displayed, showing the sender, receiver, message, timestamp, and read status of each chat.
+## **Objective:**<br>  
+This project is a simple implementation of a WhatsApp-like chat application using object-oriented programming concepts in C++. It allows users to perform various operations on their chat conversations.  
+<br><br>
 
-3. Mark Chat as Read: Users can mark a specific chat as read by providing the chat index.
 
-4. Search Chats by Sender/Receiver Name: Users can search for chats based on the sender or receiver name. The search results display the relevant chat conversations.
+## **Description:**<br>
+* **Add Chat:**<br>
+Users can add new chat conversations by providing the sender name, receiver name, and message content. <br><br>
 
-5. Delete Chat: Users can delete a specific chat by providing the chat index.
+* **Display Chat:**<br>
+All existing chat conversations are displayed, showing the sender, receiver, message, timestamp, and read status of each chat. <br><br>
 
-6. Exit: Allows the user to exit the application.
+* **Mark Chat As Read:**<br>
+Users can mark a specific chat as read by providing the chat index. <br><br>
 
-The program utilizes classes and objects to represent chats and the chat list. 
+* **Search Chats by Sender/Receiver Name:**<br>
+Users can search for chats based on the sender or receiver name. The search results display the relevant chat conversations. <br><br>
+ 
+* **Delete Chat:**<br>
+Users can delete a specific chat by providing the chat index.<br><br>
+
+* **Exit:**<br>
+Allows the user to exit the application. <br><br>
+
+## **Tech Skills Used:**
+* C++
+
+
+## **Data Structure Used:**
+* **AVL Trees:**<br>
+ AVL trees can significantly improve the performance of operations like searching, deleting, and displaying chats. It ensures that the app remains responsive and usable even as the chat history grows. <br><br>
+
